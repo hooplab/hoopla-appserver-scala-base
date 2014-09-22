@@ -18,3 +18,9 @@ RUN rm sbt-0.13.5.deb
 
 # Install python2.7 and python-pip
 RUN sudo apt-get -y install python2.7 python-pip
+
+# Install wkhtmltopdf 0.12.1
+RUN wget http://downloads.sourceforge.net/project/wkhtmltopdf/0.12.1/wkhtmltox-0.12.1_linux-wheezy-amd64.deb
+RUN sudo apt-get -y install fontconfig libfontconfig1 libjpeg8 libx11-6 libxext6 libxrender1
+RUN dpkg -i wkhtmltox-0.12.1_linux-wheezy-amd64.deb
+RUN rm wkhtmltox-0.12.1_linux-wheezy-amd64.deb
