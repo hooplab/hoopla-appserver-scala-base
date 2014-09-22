@@ -1,4 +1,4 @@
-# Dockerfile to build hoopla/hoopla-scala-base
+# Dockerfile to build hoopla/hoopla-docker-scala-base
 FROM ubuntu:14.04
 MAINTAINER Halvor Granskogen Bjørnstad <halvor@hoopla.no>
 
