@@ -1,26 +1,46 @@
 # Dockerfile to build hoopla/hoopla-docker-scala-base
-FROM ubuntu:14.04
+FROM evarga/jenkins-slave
 MAINTAINER Halvor Granskogen Bjørnstad <halvor@hoopla.no>
 
-# Install oracle java 8
-RUN sudo apt-get update
-RUN sudo apt-get -y install software-properties-common
-RUN sudo add-apt-repository -y ppa:webupd8team/java
-RUN sudo apt-get update
-RUN echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
-RUN echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
-RUN sudo apt-get -y install oracle-java8-installer
-
-# Install sbt 0.13.5
-RUN wget http://dl.bintray.com/sbt/debian/sbt-0.13.5.deb
-RUN sudo dpkg -i sbt-0.13.5.deb
-RUN rm sbt-0.13.5.deb
+# Install sbt
+RUN echo "deb http://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list && \
+    sudo apt-get update && \
+    sudo apt-get install sbt
 
 # Install python2.7 and python-pip
-RUN sudo apt-get -y install python2.7 python-pip
+RUN sudo apt-get update && \
+    sudo apt-get -y install python2.7 python-pip
 
 # Install wkhtmltopdf 0.12.1
-RUN wget http://downloads.sourceforge.net/project/wkhtmltopdf/0.12.1/wkhtmltox-0.12.1_linux-wheezy-amd64.deb
-RUN sudo apt-get -y install fontconfig libfontconfig1 libjpeg8 libx11-6 libxext6 libxrender1
-RUN dpkg -i wkhtmltox-0.12.1_linux-wheezy-amd64.deb
-RUN rm wkhtmltox-0.12.1_linux-wheezy-amd64.deb
+RUN wget http://downloads.sourceforge.net/project/wkhtmltopdf/0.12.1/wkhtmltox-0.12.1_linux-wheezy-amd64.deb && \
+    sudo apt-get -y install fontconfig libfontconfig1 libjpeg8 libx11-6 libxext6 libxrender1 && \
+    dpkg -i wkhtmltox-0.12.1_linux-wheezy-amd64.deb && \
+    rm wkhtmltox-0.12.1_linux-wheezy-amd64.deb
+
+
+##### #
+# Docker within docker:
+# See https://github.com/ahunnargikar/jenkins-dind/tree/master/single-docker
+##### #
+
+# General utils:
+RUN apt-get -y install wget curl git
+
+# Install python packages for build scripts.
+RUN pip install sh && \
+    pip install logging && \
+    pip install setuptools
+
+
+# Install SWIG, and some python deps.
+RUN sudo apt-get install -y swig libpq-dev python-dev libffi-dev
+
+# Install docker-CLI binary. Version 1.1.2 bc. of newest ubuntu repo version
+ADD https://get.docker.io/builds/Linux/x86_64/docker-1.0.1 /usr/local/bin/docker
+RUN chmod +x /usr/local/bin/docker
+
+# install diff-pdf
+RUN wget -q -O - http://archive.getdeb.net/getdeb-archive.key | sudo apt-key add - && \
+    sudo sh -c 'echo "deb http://archive.getdeb.net/ubuntu trusty-getdeb apps" >> /etc/apt/sources.list.d/getdeb.list' && \
+    sudo apt-get update && \
+    sudo apt-get install -y diff-pdf
