@@ -23,7 +23,7 @@ RUN apt-get -y install software-properties-common python-software-properties && 
 ##### #
 
 # General utils:
-RUN apt-get -y install wget curl git
+RUN apt-get -y install wget curl git jgit-cli
 
 # Install python packages for build scripts.
 RUN pip install sh && \
