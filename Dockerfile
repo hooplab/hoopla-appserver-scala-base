@@ -43,3 +43,8 @@ RUN wget -q -O - http://archive.getdeb.net/getdeb-archive.key | sudo apt-key add
     sh -c 'echo "deb http://archive.getdeb.net/ubuntu trusty-getdeb apps" >> /etc/apt/sources.list.d/getdeb.list' && \
     apt-get update && \
     apt-get install -y diff-pdf
+
+RUN chmod u+w /etc/sudoers && \
+    echo "%jenkins ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    chmod u-w /etc/sudoers && \
+    visudo --check
