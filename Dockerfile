@@ -11,11 +11,11 @@ RUN echo "deb http://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources
 RUN apt-get update && \
     apt-get -y install python2.7 python-pip
 
-# Install wkhtmltopdf 0.12.1
-RUN apt-get -y install software-properties-common python-software-properties && \
-    add-apt-repository ppa:ecometrica/servers && \
-    apt-get update && \
-    apt-get -y install wkhtmltopdf
+# Install wkhtmltopdf 0.12.2.1
+RUN apt-get install -y libxfont1 xfonts-encodings xfonts-utils xfonts-base xfonts-75dpi && \
+    wget http://downloads.sourceforge.net/project/wkhtmltopdf/0.12.2.1/wkhtmltox-0.12.2.1_linux-trusty-amd64.deb && \
+    dpkg -i wkhtmltox-0.12.2.1_linux-trusty-amd64.deb && \
+    rm wkhtmltox-0.12.2.1_linux-trusty-amd64.deb
 
 ##### #
 # Docker within docker:
