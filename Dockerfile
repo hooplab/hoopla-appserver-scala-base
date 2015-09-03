@@ -3,9 +3,10 @@ FROM evarga/jenkins-slave
 MAINTAINER Halvor Granskogen Bjørnstad <halvor@hoopla.no>
 
 # Install sbt
-RUN echo "deb http://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list && \
-    apt-get update && \
-    apt-get -y --force-yes install sbt
+RUN wget https://dl.bintray.com/sbt/debian/sbt-0.13.9.deb && \
+  dpkg -i sbt-0.13.9.deb && \
+  rm sbt-0.13.9.deb && \
+  apt-get update && apt-get install -y sbt
 
 # Install python2.7 and python-pip
 RUN apt-get update && \
