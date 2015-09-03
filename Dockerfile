@@ -13,7 +13,7 @@ RUN apt-get update && \
 
 # Install wkhtmltopdf 0.12.2.1
 RUN apt-get install -y libxfont1 xfonts-encodings xfonts-utils xfonts-base xfonts-75dpi && \
-    wget http://downloads.sourceforge.net/project/wkhtmltopdf/0.12.2.1/wkhtmltox-0.12.2.1_linux-trusty-amd64.deb && \
+    wget http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-trusty-amd64.deb && \
     dpkg -i wkhtmltox-0.12.2.1_linux-trusty-amd64.deb && \
     rm wkhtmltox-0.12.2.1_linux-trusty-amd64.deb
 
