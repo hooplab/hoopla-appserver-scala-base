@@ -36,7 +36,7 @@ RUN pip install sh && \
 RUN apt-get install -y swig libpq-dev python-dev libffi-dev
 
 # Install docker-CLI binary. Version 1.1.2 bc. of newest ubuntu repo version
-ADD https://get.docker.io/builds/Linux/x86_64/docker-1.0.1 /usr/local/bin/docker
+ADD https://get.docker.io/builds/Linux/x86_64/docker-latest /usr/local/bin/docker
 RUN chmod +x /usr/local/bin/docker
 
 # install diff-pdf
