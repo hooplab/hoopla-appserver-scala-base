@@ -33,7 +33,8 @@ RUN pip install sh && \
 
 
 # Install SWIG, and some python deps.
-RUN apt-get install -y swig libpq-dev python-dev libffi-dev
+RUN apt-get update && \
+    apt-get install -y --fix-missing swig libpq-dev python-dev libffi-dev
 
 # Install docker-CLI binary. Version 1.1.2 bc. of newest ubuntu repo version
 ADD https://get.docker.com/builds/Linux/x86_64/docker-1.9.0 /usr/local/bin/docker
